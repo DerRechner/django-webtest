@@ -16,3 +16,14 @@ def check_password(request):
         return HttpResponseRedirect('/')
     return direct_to_template(request, 'form.html', {'form': form})
 
+
+class SearchForm(forms.Form):
+    q = forms.CharField(required=False)
+    
+def search(request):
+    form = SearchForm(request.GET)
+    q = None
+    if form.is_valid():
+        q = form.cleaned_data['q']
+    return direct_to_template(request, 'get_form.html', 
+                              {'form': form, 'q': q})
